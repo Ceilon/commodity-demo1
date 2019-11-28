@@ -1,15 +1,25 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
-
-Vue.use(Vuex)
+import login from './login'
+Vue.use(Vuex);
 
 export default new Vuex.Store({
-  state: {
+  modules:{
+    login
+  },
+  state:{
+    token:''
   },
   mutations: {
-  },
-  actions: {
-  },
-  modules: {
+    changeNetwork(){
+    console.log("=>>>>>>>>>>>>>>>>>>>>>>")
+    }
   }
+  ,
+  // state: {
+  // },
+  // actions: {
+  // },
+  // modules: {
+  // }
 })
