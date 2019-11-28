@@ -16,7 +16,6 @@ export default {
             // axios.post('http://127.0.0.1:8888/api/private/v1/login',payload)
             return new Promise((resolve)=>{
                 const {login} = request;
-                // console.log("login", login);
                 login(payload).then(re => {
                     resolve(re)
                 })

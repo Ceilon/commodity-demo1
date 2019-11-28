@@ -34,7 +34,8 @@ const router = new VueRouter({
   routes
 })
 const isToken = next => {
-  let Token = localStorage.getItem('token')
+
+  let Token = JSON.parse(localStorage.getItem('userData')).token
   if (!Token) {
     return next('/login')
   }

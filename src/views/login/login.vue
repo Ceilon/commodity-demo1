@@ -103,15 +103,16 @@ export default {
         //valid验证表单是否通过
         if (valid) {
           this.userLogin(this.ruleForm).then(re => {
-            console.log('===================》', re)
             const { msg, status } = re.data.meta
             if (status !== 200) {
               Message.error(msg)
               return
             }
             Message.success(msg)
-            window.localStorage.setItem('token', re.data.data.token)
+            localStorage.setItem('userData',JSON.stringify(re.data.data))
             this.$router.push({ name: 'home' })
+          }).catch((e) => {
+            console.log("error",e)
           })
 
           console.log('验证通过', this.ruleForm)
