@@ -1,59 +1,71 @@
 <template>
-    <div class="leftMenu">
-        <el-menu
-                default-active="2"
-                class="el-menu-vertical-demo"
-                @open="handleOpen"
-                @close="handleClose"
-                >
-            <el-submenu index="1">
-                <template slot="title">
-                    <i class="el-icon-location"></i>
-                    <span>导航一</span>
-                </template>
-                <el-menu-item-group>
-                    <template slot="title">分组一</template>
-                    <el-menu-item index="1-1">选项1</el-menu-item>
-                    <el-menu-item index="1-2">选项2</el-menu-item>
-                </el-menu-item-group>
-                <el-menu-item-group title="分组2">
-                    <el-menu-item index="1-3">选项3</el-menu-item>
-                </el-menu-item-group>
-                <el-submenu index="1-4">
-                    <template slot="title">选项4</template>
-                    <el-menu-item index="1-4-1">选项1</el-menu-item>
-                </el-submenu>
-            </el-submenu>
-            <el-menu-item index="2">
-                <i class="el-icon-menu"></i>
-                <span slot="title">导航二</span>
-            </el-menu-item>
-            <el-menu-item index="3" disabled>
-                <i class="el-icon-document"></i>
-                <span slot="title">导航三</span>
-            </el-menu-item>
-            <el-menu-item index="4">
-                <i class="el-icon-setting"></i>
-                <span slot="title">导航四</span>
-            </el-menu-item>
-        </el-menu>
-    </div>
+  <div class="leftMenu">
+    <el-menu
+      class="el-menu-vertical-demo"
+      @open="handleOpen"
+      @close="handleClose"
+      :unique-opened="true"
+      :collapse="collapseFlag"
+      :collapse-transition="false"
+      router
+    >
+      <div class="collapseBox" @click="changeCollapse">
+        {{ collapseFlag ? '＞' : '＜＜＜' }}
+      </div>
+      <!--一级菜单-->
+      <el-submenu v-for="item in menus" :index="item.id + ''" :key="item.id">
+        <template slot="title">
+          <i :class="[icon[item.id], 'submenuIcon']"></i>
+          <span>{{ item.authName }}</span>
+        </template>
+        <!--二级菜单-->
+        <el-menu-item v-for="i in item.children" :index="i.path" :key="i.id">
+          <i class="el-icon-menu"></i>
+          <span slot="title">{{ i.authName }}</span>
+        </el-menu-item>
+      </el-submenu>
+    </el-menu>
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "leftMenu",
-        methods:{
-            handleOpen(key, keyPath) {
-                console.log(key, keyPath);
-            },
-            handleClose(key, keyPath) {
-                console.log(key, keyPath);
-            }
-        }
+import { mapActions, mapState, mapMutations } from 'vuex'
+
+export default {
+  name: 'leftMenu',
+  created() {
+    this.requestMenus()
+  },
+  mounted() {
+    console.log('menusmenusmenusmenus', this.menus)
+  },
+  data: () => {
+    return {
+      icon: {
+        '125': 'iconfont icon-user',
+        '103': 'iconfont icon-tijikongjian',
+        '101': 'iconfont icon-shangpin',
+        '102': 'iconfont icon-danju',
+        '145': 'iconfont icon-baobiao'
+      }
     }
+  },
+  computed: {
+    ...mapState('login', ['menus', 'collapseFlag'])
+  },
+  methods: {
+    ...mapMutations('login', ['changeCollapse']),
+    ...mapActions('login', ['requestMenus']),
+    handleOpen(key, keyPath) {
+      console.log(key, keyPath)
+    },
+    handleClose(key, keyPath) {
+      console.log(key, keyPath)
+    }
+  }
+}
 </script>
 
 <style scoped lang="less">
-@import "./leftMenu.css";
+@import 'leftMenu';
 </style>

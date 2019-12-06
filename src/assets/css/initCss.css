@@ -31,4 +31,5 @@ hr {height: .02rem;margin: .1rem 0;border: medium none;border-top: .02rem solid 
 a {color: #25a4bb;text-decoration: none;}
 html,body,#app{
     height: 100%;
+    padding-right: 0 !important;
 }

@@ -6,6 +6,7 @@ import 'element-ui/lib/theme-chalk/index.css';
 import './assets/css/initCss.css'
 import element from './element'
 import axios from 'axios';
+import './assets/fonts/iconfont.css'
 
 
 axios.defaults.baseUrl='http://127.0.0.1:8888/api/private/v1/';

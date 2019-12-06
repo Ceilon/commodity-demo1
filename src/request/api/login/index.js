@@ -20,8 +20,10 @@ const article = {
   login(params) {
     // axios.post('/saffaww',{name:'ssss'})
     return axios.post(`${base.sq}/login`, params)
+  },
+  menus(params) {
+    return axios.get(`${base.sq}/menus`, params)
   }
-  // 其他接口…………
 }
 
 export default article
