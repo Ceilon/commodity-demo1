@@ -30,7 +30,8 @@ import {
     Switch,
     Pagination,
     Dialog,
-    Popover
+    Popover,
+    Tag
 } from 'element-ui'
 
 const element = {
@@ -59,6 +60,7 @@ const element = {
         Vue.use(Pagination)
         Vue.use(Dialog)
         Vue.use(Popover)
+        Vue.use(Tag)
         Vue.prototype.$message = Message
     }
 }

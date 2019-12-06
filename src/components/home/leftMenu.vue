@@ -6,6 +6,7 @@
       @close="handleClose"
       :unique-opened="true"
       :collapse="collapseFlag"
+      :default-active="path"
       :collapse-transition="false"
       router
     >
@@ -19,7 +20,7 @@
           <span>{{ item.authName }}</span>
         </template>
         <!--二级菜单-->
-        <el-menu-item v-for="i in item.children" :index="i.path" :key="i.id">
+        <el-menu-item v-for="i in item.children" :index="'/'+i.path" :key="i.id">
           <i class="el-icon-menu"></i>
           <span slot="title">{{ i.authName }}</span>
         </el-menu-item>
@@ -34,10 +35,9 @@ import { mapActions, mapState, mapMutations } from 'vuex'
 export default {
   name: 'leftMenu',
   created() {
+    this.path=this.$route.path
+    // console.log("router",this.$route.path)
     this.requestMenus()
-  },
-  mounted() {
-    console.log('menusmenusmenusmenus', this.menus)
   },
   data: () => {
     return {
@@ -47,7 +47,8 @@ export default {
         '101': 'iconfont icon-shangpin',
         '102': 'iconfont icon-danju',
         '145': 'iconfont icon-baobiao'
-      }
+      },
+      path:''
     }
   },
   computed: {

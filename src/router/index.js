@@ -3,6 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '../views/home/Home.vue'
 import Login from '../views/login/login'
 import User from '../views/user/user'
+import Roles from '../views/power/roles'
+import Rights from '../views/power/rights'
 
 Vue.use(VueRouter)
 
@@ -17,11 +19,23 @@ const routes = [
     path: '/home',
     name: 'home',
     component: Home,
-    children:[{
-      path:'/users',
-      name:'user',
-      component:User
-    }]
+    children: [
+      {
+        path: '/users',
+        name: 'user',
+        component: User
+      },
+      {
+        path: '/roles',
+        name: 'roles',
+        component: Roles
+      },
+      {
+        path: '/rights',
+        name: 'rights',
+        component: Rights
+      }
+    ]
   },
   {
     path: '/about',
@@ -40,7 +54,6 @@ const router = new VueRouter({
   routes
 })
 const isToken = next => {
-
   let Token = JSON.parse(localStorage.getItem('userData')).token
   if (!Token) {
     return next('/login')
