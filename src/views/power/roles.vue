@@ -1,15 +1,80 @@
 <template>
-    <div>
-        ssssssssss/roles/roles/roles
-    </div>
+  <div class="roles">
+
+      <!--面包屑块-->
+      <div class="breadcrumb">
+          <el-breadcrumb separator="/">
+              <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+              <el-breadcrumb-item><a href="/">权限管理</a></el-breadcrumb-item>
+              <el-breadcrumb-item>权限列表</el-breadcrumb-item>
+          </el-breadcrumb>
+      </div>
+      <div class="roleTableBox">
+          <div class="addRolesBox">
+              <el-button
+                      type="primary"
+              >添加角色</el-button>
+          </div>
+          <el-table
+                  :data="rolesList.data"
+                  stripe
+                  style="width: 100%;margin-bottom: 20px;"
+                  border
+          >
+              <el-table-column type="expand"> </el-table-column>
+              <el-table-column prop="roleName" label="角色名称"> </el-table-column>
+              <el-table-column prop="roleDesc" label="角色描述"></el-table-column>
+              <el-table-column label="操作">
+                  <template slot-scope="scope">
+                      <div class="operationBox">
+                          <el-button
+                                  type="primary"
+                                  icon="el-icon-edit"
+                                  @click="handleEdit(scope.$index, scope.row)"
+                          >编辑</el-button
+                          >
+                          <el-button
+                                  type="danger"
+                                  icon="el-icon-delete"
+                                  @click="handleDelete(scope.$index, scope.row)"
+                          >删除</el-button
+                          >
+                          <el-button type="warning" icon="el-icon-search">分配权限</el-button>
+                      </div>
+                  </template>
+              </el-table-column>
+          </el-table>
+
+      </div>
+
+  </div>
 </template>
 
 <script>
-    export default {
-        name: "roles"
+import { mapActions, mapState } from 'vuex'
+export default {
+  name: 'roles',
+  created() {
+    this.storeRolesList()
+  },
+  data() {
+    return {}
+  },
+  methods: {
+    ...mapActions('power', ['storeRolesList']),
+    handleEdit(index, row) {
+      console.log(index, row)
+    },
+    handleDelete(index, row) {
+      console.log(index, row)
     }
+  },
+  computed: {
+    ...mapState('power', ['rolesList'])
+  }
+}
 </script>
 
-<style scoped>
-
+<style scoped lang="less">
+@import 'roles';
 </style>

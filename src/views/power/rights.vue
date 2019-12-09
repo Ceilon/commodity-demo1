@@ -3,21 +3,20 @@
     <!--面包屑块-->
     <div class="breadcrumb">
       <el-breadcrumb separator="/">
-        <el-breadcrumb-item :to="{ path: '/' }">首页</el-breadcrumb-item>
-        <el-breadcrumb-item><a href="/">活动管理</a></el-breadcrumb-item>
-        <el-breadcrumb-item>活动列表</el-breadcrumb-item>
-        <el-breadcrumb-item>活动详情</el-breadcrumb-item>
+        <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item><a href="/">权限管理</a></el-breadcrumb-item>
+        <el-breadcrumb-item>权限列表</el-breadcrumb-item>
       </el-breadcrumb>
     </div>
 
     <div class="rightsTable">
       <el-table :data="rightsList.data" style="width: 100%">
-        <el-table-column prop="date" label="#" type="index"> </el-table-column>
+        <el-table-column label="#" type="index"> </el-table-column>
         <el-table-column prop="authName" label="权限名称"> </el-table-column>
         <el-table-column prop="path" label="路径"> </el-table-column>
         <el-table-column label="权限等级">
           <template slot-scope="scope">
-            <el-tag>{{ parseInt(scope.row.level,10)+1 }}</el-tag>
+            <el-tag :type="scope.row.level==='0'?'':((scope.row.level==='1')?'success':'warning')">{{ convertChinese(scope) }} 级</el-tag>
           </template>
         </el-table-column>
       </el-table>
@@ -34,35 +33,18 @@ export default {
   },
   data() {
     return {
-      tableData: [
-        {
-          date: '2016-05-02',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1518 弄'
-        },
-        {
-          date: '2016-05-04',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1517 弄'
-        },
-        {
-          date: '2016-05-01',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1519 弄'
-        },
-        {
-          date: '2016-05-03',
-          name: '王小虎',
-          address: '上海市普陀区金沙江路 1516 弄'
-        }
-      ]
     }
   },
   computed: {
-    ...mapState('power', ['rightsList'])
+    ...mapState('power', ['rightsList']),
   },
   methods: {
-    ...mapActions('power', ['storeRightsList'])
+    ...mapActions('power', ['storeRightsList']),
+    convertChinese(nmb){
+      const nmbC=['一','二','三','四','五','六','七','八','九'];
+      // console.log("!!!!!!!!!!!!!",nmb.row.level)
+      return nmbC[parseInt(nmb.row.level,10)]
+    }
   }
 }
 </script>
