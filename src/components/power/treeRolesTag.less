@@ -1,0 +1,38 @@
+/**
+*@Author:ChaiLong
+*@Description:
+*@Date:Created in  2019/12/10
+*@Modified By:
+*/
+.treeRolesTag {
+  border-bottom: rgba(233, 233, 233, 0.8) solid 1px;
+  .rolesRows {
+    border-top: rgba(233, 233, 233, 0.8) solid 1px;
+    //padding: 10px 0 10px 0;
+    .firstBox {
+      display: flex;
+      align-items: center;
+    }
+    .secondBox{
+      .secondBoxRow{
+        padding-bottom: 10px;
+        .secondBoxRowCol1{
+          padding-top: 10px;
+          display: flex;
+          align-items: center;
+        }
+        .secondBoxRowCol2{
+          display: flex;
+          flex-wrap:wrap;
+          align-content: space-between;
+          .el-tag{
+            margin:10px 10px 0 0;
+          }
+        }
+      }
+      .secondBoxRow:not(:last-child){
+        border-bottom: rgba(233, 233, 233, 0.8) solid 1px;
+      }
+    }
+  }
+}

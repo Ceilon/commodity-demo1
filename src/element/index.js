@@ -31,7 +31,8 @@ import {
     Pagination,
     Dialog,
     Popover,
-    Tag
+    Tag,
+    MessageBox
 } from 'element-ui'
 
 const element = {
@@ -62,6 +63,7 @@ const element = {
         Vue.use(Popover)
         Vue.use(Tag)
         Vue.prototype.$message = Message
+        Vue.prototype.$confirm = MessageBox.confirm;
     }
 }
 export default element

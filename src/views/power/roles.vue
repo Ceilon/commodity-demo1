@@ -1,59 +1,68 @@
 <template>
   <div class="roles">
-
-      <!--面包屑块-->
-      <div class="breadcrumb">
-          <el-breadcrumb separator="/">
-              <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-              <el-breadcrumb-item><a href="/">权限管理</a></el-breadcrumb-item>
-              <el-breadcrumb-item>权限列表</el-breadcrumb-item>
-          </el-breadcrumb>
+    <!--面包屑块-->
+    <div class="breadcrumb">
+      <el-breadcrumb separator="/">
+        <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
+        <el-breadcrumb-item><a href="/">权限管理</a></el-breadcrumb-item>
+        <el-breadcrumb-item>权限列表</el-breadcrumb-item>
+      </el-breadcrumb>
+    </div>
+    <div class="roleTableBox">
+      <!--添加角色按钮-->
+      <div class="addRolesBox">
+        <el-button type="primary">添加角色</el-button>
       </div>
-      <div class="roleTableBox">
-          <div class="addRolesBox">
+
+      <!--表格-->
+      <el-table
+        :data="rolesList.data"
+        stripe
+        style="width: 100%;margin-bottom: 20px;"
+        border
+      >
+        <!--展开属性tag项-->
+        <el-table-column type="expand">
+          <template slot-scope="scope">
+            <tree-roles-tag :roleList="scope.row.children"></tree-roles-tag>
+          </template>
+        </el-table-column>
+        <el-table-column prop="roleName" label="角色名称"> </el-table-column>
+        <el-table-column prop="roleDesc" label="角色描述"></el-table-column>
+        <el-table-column label="操作">
+          <template slot-scope="scope">
+            <div class="operationBox">
               <el-button
-                      type="primary"
-              >添加角色</el-button>
-          </div>
-          <el-table
-                  :data="rolesList.data"
-                  stripe
-                  style="width: 100%;margin-bottom: 20px;"
-                  border
-          >
-              <el-table-column type="expand"> </el-table-column>
-              <el-table-column prop="roleName" label="角色名称"> </el-table-column>
-              <el-table-column prop="roleDesc" label="角色描述"></el-table-column>
-              <el-table-column label="操作">
-                  <template slot-scope="scope">
-                      <div class="operationBox">
-                          <el-button
-                                  type="primary"
-                                  icon="el-icon-edit"
-                                  @click="handleEdit(scope.$index, scope.row)"
-                          >编辑</el-button
-                          >
-                          <el-button
-                                  type="danger"
-                                  icon="el-icon-delete"
-                                  @click="handleDelete(scope.$index, scope.row)"
-                          >删除</el-button
-                          >
-                          <el-button type="warning" icon="el-icon-search">分配权限</el-button>
-                      </div>
-                  </template>
-              </el-table-column>
-          </el-table>
-
-      </div>
-
+                type="primary"
+                icon="el-icon-edit"
+                @click="handleEdit(scope.$index, scope.row)"
+                >编辑</el-button
+              >
+              <el-button
+                type="danger"
+                icon="el-icon-delete"
+                @click="handleDelete(scope.$index, scope.row)"
+                >删除</el-button
+              >
+              <el-button type="warning" icon="el-icon-search"
+                >分配权限</el-button
+              >
+            </div>
+          </template>
+        </el-table-column>
+      </el-table>
+    </div>
   </div>
 </template>
 
 <script>
 import { mapActions, mapState } from 'vuex'
+import TreeRolesTag from '../../components/power/treeRolesTag'
 export default {
   name: 'roles',
+  components: {
+    TreeRolesTag
+  },
   created() {
     this.storeRolesList()
   },
