@@ -5,31 +5,38 @@
  *@Modified By:
  */
 import request from '../../request/api'
-const {rightsList,rolesList} = request;
+const { rightsList, rolesList, deleteRole } = request
 export default {
-    namespaced:true,
-    state:{
-        rightsList:{},
-        rolesList:[]
+  namespaced: true,
+  state: {
+    rightsList: {},
+    rolesList: []
+  },
+  mutations: {
+    saveRightsList(state, payload) {
+      state.rightsList = payload
     },
-    mutations:{
-        saveRightsList(state,payload){
-                state.rightsList=payload;
-        },
-        saveRolesList(state,payload){
-            state.rolesList=payload;
-        }
-    },
-    actions:{
-        storeRightsList({commit}){
-            rightsList().then(re=>{
-                commit('saveRightsList',re.data)
-            })
-        },
-        storeRolesList({commit}){
-            rolesList().then(re=>{
-                commit('saveRolesList',re.data)
-            })
-        }
+    saveRolesList(state, payload) {
+      state.rolesList = payload
     }
+  },
+  actions: {
+    storeRightsList({ commit }) {
+      rightsList().then(re => {
+        commit('saveRightsList', re.data)
+      })
+    },
+    storeRolesList({ commit }) {
+      rolesList().then(re => {
+        commit('saveRolesList', re.data)
+      })
+    },
+    storeDeleteRole({ commit }, payload) {
+      return new Promise(resolve => {
+        deleteRole(payload).then(re => {
+            resolve(re.data)
+        })
+      })
+    }
+  }
 }

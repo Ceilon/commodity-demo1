@@ -22,7 +22,7 @@ const article = {
     return axios.post(`${base.sq}/login`, params)
   },
   menus(params) {
-    return axios.get(`${base.sq}/menus`, params)
+    return axios.get(`${base.sq}/menus`, {params})
   }
 }
 

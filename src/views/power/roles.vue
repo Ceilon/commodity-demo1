@@ -24,7 +24,7 @@
         <!--展开属性tag项-->
         <el-table-column type="expand">
           <template slot-scope="scope">
-            <tree-roles-tag :roleList="scope.row.children"></tree-roles-tag>
+            <tree-roles-tag :updateRole="()=>updateRole(data='',role=scope.row)" :role="scope.row" :roleList="scope.row.children"></tree-roles-tag>
           </template>
         </el-table-column>
         <el-table-column prop="roleName" label="角色名称"> </el-table-column>
@@ -76,6 +76,10 @@ export default {
     },
     handleDelete(index, row) {
       console.log(index, row)
+    },
+    updateRole(data,role){
+      console.log("data",data,'fffffffffffffffffffff',role)
+      role.children=data
     }
   },
   computed: {

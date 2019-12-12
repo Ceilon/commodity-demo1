@@ -21,6 +21,9 @@ const article = {
     rolesList() {
         // axios.post('/saffaww',{name:'ssss'})
         return axios.get(`${base.sq}/roles`)
+    },
+    deleteRole(params){
+        return axios.delete(`${base.sq}/roles/${params.roleId}/rights/${params.rightId}`)
     }
 
 }
