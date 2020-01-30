@@ -24,10 +24,13 @@
         <!--展开属性tag项-->
         <el-table-column type="expand">
           <template slot-scope="scope">
-            <tree-roles-tag :updateRole="()=>updateRole(data='',role=scope.row)" :role="scope.row" :roleList="scope.row.children"></tree-roles-tag>
+            <tree-roles-tag
+              :role="scope.row"
+              :roleList="scope.row.children"
+            ></tree-roles-tag>
           </template>
         </el-table-column>
-        <el-table-column prop="roleName" label="角色名称"> </el-table-column>
+        <el-table-column prop="roleName" label="角色名称"></el-table-column>
         <el-table-column prop="roleDesc" label="角色描述"></el-table-column>
         <el-table-column label="操作">
           <template slot-scope="scope">
@@ -44,13 +47,39 @@
                 @click="handleDelete(scope.$index, scope.row)"
                 >删除</el-button
               >
-              <el-button type="warning" icon="el-icon-search"
+              <el-button
+                @click="handlePrivilege(scope.row)"
+                type="warning"
+                icon="el-icon-search"
                 >分配权限</el-button
               >
             </div>
           </template>
         </el-table-column>
       </el-table>
+    </div>
+
+    <div class="privilege">
+      <el-dialog title="权限分配" :visible.sync="dialogVisible" @close="closePrivilege">
+        <div>
+          <el-tree
+                  :data="rightsTree"
+                  show-checkbox
+                  node-key="id"
+                  :default-checked-keys="defaultTree"
+                  :default-expand-all=true
+                  :props="defaultProps"
+                  ref="rightsTree"
+          >
+          </el-tree>
+        </div>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="dialogVisible = false">取 消</el-button>
+          <el-button type="primary" @click="submitTree(scope.row)"
+            >确 定</el-button
+          >
+        </div>
+      </el-dialog>
     </div>
   </div>
 </template>
@@ -67,19 +96,66 @@ export default {
     this.storeRolesList()
   },
   data() {
-    return {}
+    return {
+      dialogVisible: false,
+      defaultProps: {
+        children: 'children',
+        label: 'authName'
+      },
+      rightsTree:[],
+      defaultTree:[]
+    }
   },
   methods: {
-    ...mapActions('power', ['storeRolesList']),
+    ...mapActions('power', ['storeRolesList','storeGetRightsTree','storeAllotRights']),
     handleEdit(index, row) {
       console.log(index, row)
     },
     handleDelete(index, row) {
       console.log(index, row)
     },
-    updateRole(data,role){
-      console.log("data",data,'fffffffffffffffffffff',role)
-      role.children=data
+    handlePrivilege(role) {
+      this.storeGetRightsTree('tree').then(re=>{
+        if(re.meta.status===200){
+          this.rightsTree=re.data
+          this.getThreeLevelArray(role,this.defaultTree)
+          this.dialogVisible = true
+          return
+        }
+        this.message.error(re.meta.msg)
+      })
+    },
+    //筛选出三级知识点生成数组进行树形选择默认
+    getThreeLevelArray(objData,arr){
+      if(!objData.children){
+        arr.push(objData.id)
+      }else {
+        objData.children.map(re=>{
+          this.getThreeLevelArray(re,arr)
+        })
+      }
+    },
+      submitTree(row){
+
+          let  checkeds=[
+              ...this.$refs.rightsTree.getCheckedKeys(),
+              ...this.$refs.rightsTree.getHalfCheckedKeys(),
+          ]
+          this.storeAllotRights({
+              roleId:row.id,
+              rids:checkeds.join(',')
+          }).then(re=>{
+              if(re.data.meta.status===200){
+                  this.storeRolesList()
+                  this.dialogVisible = false
+              }else {
+                  this.message.error(re.data.meta.msg)
+              }
+          })
+         console.log(" this.$refs.rightsTree.getCheckedKeys()")
+      },
+    closePrivilege(){
+      this.defaultTree=[]
     }
   },
   computed: {

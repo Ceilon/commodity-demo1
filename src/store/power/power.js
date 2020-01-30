@@ -5,12 +5,13 @@
  *@Modified By:
  */
 import request from '../../request/api'
-const { rightsList, rolesList, deleteRole } = request
+const { rightsList, rolesList, deleteRole, getRightsTree,allotRights} = request
 export default {
   namespaced: true,
   state: {
     rightsList: {},
-    rolesList: []
+    rolesList: [],
+    rightsTree: []
   },
   mutations: {
     saveRightsList(state, payload) {
@@ -18,6 +19,15 @@ export default {
     },
     saveRolesList(state, payload) {
       state.rolesList = payload
+    },
+    updateRole(state, payload) {
+      for (let i = 0; i < state.rolesList.data.length; i++) {
+        let data = state.rolesList.data[i]
+        if (data.id === payload.roleId) {
+          data.children = payload.roleData
+          break
+        }
+      }
     }
   },
   actions: {
@@ -34,9 +44,28 @@ export default {
     storeDeleteRole({ commit }, payload) {
       return new Promise(resolve => {
         deleteRole(payload).then(re => {
-            resolve(re.data)
+          resolve(re.data)
         })
       })
+    },
+    storeGetRightsTree({ commit }, payload) {
+      return new Promise(resolve => {
+        getRightsTree(payload).then(re => {
+          if(re.data.meta.status===200){
+            resolve(re.data)
+          }
+        })
+      })
+    },
+    storeAllotRights({commit},payload){
+      return new Promise(resolve => {
+        allotRights(payload).then(re=>{
+            if(re.data.meta.status===200){
+              resolve(re.data)
+            }
+        })
+      })
+
     }
   }
 }

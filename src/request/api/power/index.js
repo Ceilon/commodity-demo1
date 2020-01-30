@@ -24,6 +24,14 @@ const article = {
     },
     deleteRole(params){
         return axios.delete(`${base.sq}/roles/${params.roleId}/rights/${params.rightId}`)
+    },
+//    获取所有权限值，提供给权限分配使用
+    getRightsTree(params){
+        return axios.get(`${base.sq}/rights/${params}`)
+    },
+    //分配权限
+    allotRights(params){
+        return axios.post(`${base.sq}/roles/${params.roleId}rights`,params.rids)
     }
 
 }

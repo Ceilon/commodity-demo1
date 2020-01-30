@@ -5,6 +5,7 @@ import Login from '../views/login/login'
 import User from '../views/user/user'
 import Roles from '../views/power/roles'
 import Rights from '../views/power/rights'
+import JD from '../views/JD'
 
 Vue.use(VueRouter)
 
@@ -14,6 +15,11 @@ const routes = [
     path: '/login',
     name: 'login',
     component: Login
+  },
+  {
+    path: '/jd',
+    name: 'jingdong',
+    component: JD
   },
   {
     path: '/home',

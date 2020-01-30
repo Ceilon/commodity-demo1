@@ -32,7 +32,8 @@ import {
     Dialog,
     Popover,
     Tag,
-    MessageBox
+    MessageBox,
+    Tree
 } from 'element-ui'
 
 const element = {
@@ -62,6 +63,7 @@ const element = {
         Vue.use(Dialog)
         Vue.use(Popover)
         Vue.use(Tag)
+        Vue.use(Tree)
         Vue.prototype.$message = Message
         Vue.prototype.$confirm = MessageBox.confirm;
     }

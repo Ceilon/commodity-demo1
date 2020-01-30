@@ -25,6 +25,17 @@
           <span slot="title">{{ i.authName }}</span>
         </el-menu-item>
       </el-submenu>
+      <!--<el-submenu index="jindong" key="jindong">-->
+        <!--<template slot="title">-->
+          <!--<i :class="['el-icon-magic-stick', 'submenuIcon']"></i>-->
+          <!--<span>仿京东</span>-->
+        <!--</template>-->
+
+        <!--<el-menu-item :index="'/'+'jindong'" :key="jindong1">-->
+          <!--<i class="el-icon-magic-stick"></i>-->
+          <!--<span slot="title">{{ i.authName }}</span>-->
+        <!--</el-menu-item>-->
+      <!--</el-submenu>-->
     </el-menu>
   </div>
 </template>

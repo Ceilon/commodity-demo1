@@ -19,7 +19,6 @@ export default {
       state.menus = payload
     },
     changeCollapse(state){
-      console.log("=============>")
       state.collapseFlag=!state.collapseFlag
     }
   },
@@ -37,8 +36,20 @@ export default {
       // })
     },
     requestMenus({ commit }) {
+        //新增一个仿京东页面
         menus().then(re => {
-          commit('addMenus', re.data.data)
+          let newMenus = [...re.data.data];
+          newMenus=re.data.data.map(t=>{
+            if(t.authName==='商品管理'){
+              t.children.push({
+                id:109,
+                authName:'仿京东页',
+                path:'jd'
+              })
+            }
+            return t
+          })
+          commit('addMenus', newMenus)
         })
     }
   },

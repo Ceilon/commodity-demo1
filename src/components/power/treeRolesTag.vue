@@ -21,7 +21,9 @@
           :key="t.id"
         >
           <el-col class="secondBoxRowCol1" :span="6">
-            <el-tag    @close="removeTags(t)" type="success" closable>{{ t.authName }}</el-tag>
+            <el-tag @close="removeTags(t)" type="success" closable>{{
+              t.authName
+            }}</el-tag>
             <i class="el-icon-caret-right"></i>
           </el-col>
           <el-col class="secondBoxRowCol2" :span="18">
@@ -41,12 +43,13 @@
 </template>
 
 <script>
-import { mapActions } from 'vuex'
+import { mapActions, mapMutations } from 'vuex'
 export default {
   name: 'treeRolesTag',
-  props: ['roleList', 'role','updateRole'],
+  props: ['roleList', 'role'],
   methods: {
-    ...mapActions('power', ['storeDeleteRole','storeRolesList']),
+    ...mapMutations('power', ['updateRole']),
+    ...mapActions('power', ['storeDeleteRole', 'storeRolesList']),
     removeTags(obj) {
       this.$confirm('此操作将永久删除该文件, 是否继续?', '提示', {
         confirmButtonText: '确定',
@@ -54,20 +57,20 @@ export default {
         type: 'warning'
       })
         .then(() => {
-            console.log("reolessssssssssssssss",this.role)
-            const callParam={roleId:this.role.id,rightId:obj.id}
-            this.storeDeleteRole(callParam).then(re=>{
-                if(re.meta.status===200){
-                    // console.log("re.datare.data",re.data)
-                    this.updateRole(re.data)
-                    this.$message({
-                        type: 'success',
-                        message: '删除成功!'
-                    })
-                }else {
-                    this.$message.error(re.mata.msg)
-                }
-            })
+          console.log('reolessssssssssssssss', this.role)
+          const callParam = { roleId: this.role.id, rightId: obj.id }
+          this.storeDeleteRole(callParam).then(re => {
+            if (re.meta.status === 200) {
+              // console.log("re.datare.data",re.data)
+              this.updateRole({roleData:re.data,roleId:this.role.id})
+              this.$message({
+                type: 'success',
+                message: '删除成功!'
+              })
+            } else {
+              this.$message.error(re.mata.msg)
+            }
+          })
         })
         .catch(() => {
           this.$message({
