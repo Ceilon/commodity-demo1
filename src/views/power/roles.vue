@@ -109,10 +109,10 @@ export default {
   methods: {
     ...mapActions('power', ['storeRolesList','storeGetRightsTree','storeAllotRights']),
     handleEdit(index, row) {
-      console.log(index, row)
+      // console.log(index, row)
     },
     handleDelete(index, row) {
-      console.log(index, row)
+      // console.log(index, row)
     },
     handlePrivilege(role) {
       this.storeGetRightsTree('tree').then(re=>{
@@ -152,7 +152,6 @@ export default {
                   this.message.error(re.data.meta.msg)
               }
           })
-         console.log(" this.$refs.rightsTree.getCheckedKeys()")
       },
     closePrivilege(){
       this.defaultTree=[]

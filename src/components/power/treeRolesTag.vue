@@ -57,7 +57,7 @@ export default {
         type: 'warning'
       })
         .then(() => {
-          console.log('reolessssssssssssssss', this.role)
+          // console.log('reolessssssssssssssss', this.role)
           const callParam = { roleId: this.role.id, rightId: obj.id }
           this.storeDeleteRole(callParam).then(re => {
             if (re.meta.status === 200) {

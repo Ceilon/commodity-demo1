@@ -57,7 +57,7 @@ const errorHandle = (status, other) => {
       tip('请求的资源不存在')
       break
     default:
-      console.log(other)
+      // console.log(other)
   }
 }
 
@@ -72,7 +72,7 @@ instance.defaults.headers.post['Content-Type'] =
  */
 instance.interceptors.request.use(
   config => {
-    console.log('token')
+    // console.log('token')
     // 登录流程控制中，根据本地是否存在token判断用户的登录情况
     // 但是即使token存在，也有可能token是过期的，所以在每次的请求头中携带token
     // 后台根据携带的token判断用户的登录情况，并返回给我们对应的状态码

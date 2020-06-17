@@ -112,10 +112,10 @@ export default {
             localStorage.setItem('userData',JSON.stringify(re.data.data))
             this.$router.push({ name: 'home' })
           }).catch((e) => {
-            console.log("error",e)
+            // console.log("error",e)
           })
 
-          console.log('验证通过', this.ruleForm)
+          // console.log('验证通过', this.ruleForm)
         }
       })
     }
